@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 
 const User = require("./models/user");
+const auth = require("./middleware/auth");
 
 const app = express();
 app.use(express.json());
@@ -77,6 +78,11 @@ app.post("/login", async (req, res) => {
     console.log(error);
     res.status(500).send("Something went wrong");
   }
+});
+
+app.get("/dashboard", auth, (req, res) => {
+    console.log(req.user)
+  res.send("Welcome to Dashboard!");
 });
 
 module.exports = app;
