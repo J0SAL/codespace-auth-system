@@ -60,8 +60,9 @@ app.post("/login", async (req, res) => {
       user.token = token;
       user.password = undefined;
 
+      const maxAge = 1000 * 60 * 60 * 24 * 3;
       const options = {
-        expires: new Date(Date.now() * 1000 * 60 * 60 * 24 * 3),
+        maxAge,
         httpOnly: true,
       };
 
@@ -71,8 +72,6 @@ app.post("/login", async (req, res) => {
         user,
       });
     }
-
-    res.status(201).send(user);
   } catch (error) {
     console.log("Error!");
     console.log(error);
